@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    User: <input type="text" id="userInput"/>
+    <br />
+    Message: <input type="text" id="messageInput"/>
+    <input type="button" id="sendButton" value="Send Message" />
+
+    <ul id="messageList"></ul>
+</div>
+
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
