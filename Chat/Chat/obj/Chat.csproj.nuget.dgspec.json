@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj": {}
+    "C:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj": {}
   },
   "projects": {
-    "c:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj": {
+    "C:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj",
+        "projectUniqueName": "C:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj",
         "projectName": "Chat",
-        "projectPath": "c:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj",
+        "projectPath": "C:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\Chat.csproj",
         "packagesPath": "C:\\Users\\joshu\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\obj\\",
+        "outputPath": "C:\\Users\\joshu\\Documents\\Git\\chat-signal-r\\Chat\\Chat\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
