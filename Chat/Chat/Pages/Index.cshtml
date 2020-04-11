@@ -3,14 +3,15 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<button id="startButton">Start</button>
+User: <input type="text" id="userInput"/>
 
-<div class="container">
-    User: <input type="text" id="userInput"/>
+<div id="container" class="container hidden">
     <br />
     Message: <input type="text" id="messageInput"/>
     <input type="button" id="sendButton" value="Send Message" />
 
-    <ul id="messageList"></ul>
+    <div id="messageList"></div>
 </div>
 
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>

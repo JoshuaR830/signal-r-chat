@@ -3,39 +3,78 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 var users = []
+var myName = "Alana"
 
 document.getElementById("sendDirectButton").disabled = true;
 
 connection.start().then(function () {
     document.getElementById("sendDirectButton").disabled = false;
-    connection.invoke("AddToGroup", "admin");
+    connection.invoke("AddToAdminGroup", myName);
     console.log("Start AddToGroup");
 }).catch(function (err) {
     return console.error((err.toString()));
 });
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("UserConnected", function(user) {
     console.log(user);
+    if(!users.includes(user)) {
+        console.log("Create");
+        users.push(user);
+        var container = document.createElement("div");
+        container.id = "message-container-" + user;
+        container.className = "message-container";
+        document.getElementById("messageList").appendChild(container);
+        console.log(">>>>" + user)
+        connection.invoke("AddToGroup", user);
 
-    if (users.includes(user)) {
-        // Probably update the existing one - should sett list item id as the id of the user
-        return;
+        console.log("> Hello <");
+
+        var li = document.createElement("div");
+        li.className = "message --left";
+        li.textContent = user + " would like help";
+        console.log("message-container-" + user);
+        var messageContainer = document.getElementById("message-container-" + user);
+        console.log("messageContainer");
+        messageContainer.appendChild(li);
+
+    }
+});
+
+connection.on("AdminConnected", function (name) {
+    console.log(name);
+
+    if (name == myName) {
+        document.getElementById("messageList").classList.add("online");
     }
 
-    connection.invoke("AddToGroup", user);
-    users.push(user);
-    var li = document.createElement("li");
-    li.textContent = user;
-    document.getElementById("messageList").appendChild(li);
+    console.log("Online")
+});
+
+connection.on("ReceiveMessage", function (user, friendlyName, message) {
+    console.log(user);
+
+    if (!users.includes(friendlyName)) {
+        connection.invoke("AddToGroup", friendlyName);
+        users.push(user);
+    }
+
+    var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt").replace(/>/g, "&gt;");
+
+    var li = document.createElement("div");
+    li.className = "message --left";
+    li.textContent = msg;
+    var messageContainer = document.getElementById("message-container-" + friendlyName);
+    messageContainer.appendChild(li);
 });
 
 connection.on("ReceiveDirectMessage", function (recipient, myName, message) {
     console.log("Received direct message");
     var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt").replace(/>/g, "&gt;");
-    var encodedMsg = myName + " says " + msg + "to" + recipient;
-    var li = document.createElement("li");
-    li.textContent = encodedMsg;
-    document.getElementById("messageList").appendChild(li);
+    var li = document.createElement("div");
+    li.className = "message --right";
+    li.textContent = msg;
+    var messageContainer = document.getElementById("message-container-" + recipient);
+    messageContainer.appendChild(li);
 });
 
 document.getElementById("sendDirectButton").addEventListener("click", function (event) {
