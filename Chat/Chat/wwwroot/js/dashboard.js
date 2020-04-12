@@ -2,8 +2,8 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-var users = []
-var myName = "Alana"
+var users = [];
+var myName = "Alana";
 
 document.getElementById("sendDirectButton").disabled = true;
 
@@ -22,9 +22,12 @@ connection.on("UserConnected", function(user) {
         users.push(user);
         var container = document.createElement("div");
         container.id = "message-container-" + user;
-        container.className = "message-container";
-        document.getElementById("messageList").appendChild(container);
-        console.log(">>>>" + user)
+        container.className = "message-container hidden";
+
+        var messageList = document.getElementById("messageList");
+
+        messageList.appendChild(container);
+        console.log(">>>>" + user);
         connection.invoke("AddToGroup", user);
 
         console.log("> Hello <");
@@ -37,6 +40,34 @@ connection.on("UserConnected", function(user) {
         console.log("messageContainer");
         messageContainer.appendChild(li);
 
+        var userBox = document.createElement("div");
+        userBox.className = "user"
+        userBox.textContent = user;
+        var userList = document.getElementById("userList");
+        userList.appendChild(userBox);
+
+        // messageList.id = `message-container-${user}`;
+        messageList.classList.remove("hidden");
+
+        userBox.addEventListener('click', function(event) {
+            console.log(event.target.textContent);
+            document.getElementById('recipientInput').value = event.target.textContent;
+            var messageContainers = document.querySelectorAll('.message-container');
+            messageContainers.forEach(container => {
+                container.classList.add("hidden");
+                console.log(container);
+            });
+
+            var userBoxes = document.querySelectorAll('.user');
+            userBoxes.forEach(box => {
+                box.classList.remove('user-focused');
+            });
+
+            event.target.classList.add('user-focused');
+            document.getElementById("messageInput").value = "";
+
+            document.getElementById(`message-container-${user}`).classList.remove("hidden");
+        });
     }
 });
 
