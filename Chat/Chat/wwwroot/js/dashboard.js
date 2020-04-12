@@ -42,6 +42,7 @@ connection.on("UserConnected", function(user) {
 
         var userBox = document.createElement("div");
         userBox.className = "user"
+        userBox.id = "user-" + user;
         userBox.textContent = user;
         var userList = document.getElementById("userList");
         userList.appendChild(userBox);
@@ -49,9 +50,13 @@ connection.on("UserConnected", function(user) {
         // messageList.id = `message-container-${user}`;
         messageList.classList.remove("hidden");
 
+        var subtitle = document.createElement('div');
+        subtitle.textContent = "Just joined";
+        subtitle.className = "user-subtitle";
+        userBox.appendChild(subtitle);
         userBox.addEventListener('click', function(event) {
-            console.log(event.target.textContent);
-            document.getElementById('recipientInput').value = event.target.textContent;
+            console.log(event.currentTarget.textContent);
+            document.getElementById('recipientInput').value = event.currentTarget.textContent;
             var messageContainers = document.querySelectorAll('.message-container');
             messageContainers.forEach(container => {
                 container.classList.add("hidden");
@@ -63,7 +68,7 @@ connection.on("UserConnected", function(user) {
                 box.classList.remove('user-focused');
             });
 
-            event.target.classList.add('user-focused');
+            event.currentTarget.classList.add('user-focused');
             document.getElementById("messageInput").value = "";
 
             document.getElementById(`message-container-${user}`).classList.remove("hidden");
@@ -96,6 +101,11 @@ connection.on("ReceiveMessage", function (user, friendlyName, message) {
     li.textContent = msg;
     var messageContainer = document.getElementById("message-container-" + friendlyName);
     messageContainer.appendChild(li);
+
+    var currentUserBox = document.getElementById("user-" + friendlyName);
+    console.log(currentUserBox);
+    var subTitle = currentUserBox.querySelector(".user-subtitle");
+    subTitle.textContent = message;
 });
 
 connection.on("ReceiveDirectMessage", function (recipient, myName, message) {
