@@ -43,7 +43,11 @@ connection.on("UserConnected", function(user) {
         var userBox = document.createElement("div");
         userBox.className = "user"
         userBox.id = "user-" + user;
-        userBox.textContent = user;
+        var nameBox = document.createElement("div");
+        nameBox.textContent = user;
+        nameBox.className = "name"
+        userBox.appendChild(nameBox);
+
         var userList = document.getElementById("userList");
         userList.appendChild(userBox);
 
@@ -56,7 +60,8 @@ connection.on("UserConnected", function(user) {
         userBox.appendChild(subtitle);
         userBox.addEventListener('click', function(event) {
             console.log(event.currentTarget.textContent);
-            document.getElementById('recipientInput').value = event.currentTarget.textContent;
+            var recipientName = event.currentTarget.querySelector(".name").textContent;
+            document.getElementById('recipientInput').value = recipientName;
             var messageContainers = document.querySelectorAll('.message-container');
             messageContainers.forEach(container => {
                 container.classList.add("hidden");

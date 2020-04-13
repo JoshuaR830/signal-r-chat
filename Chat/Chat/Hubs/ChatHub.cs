@@ -44,6 +44,9 @@ namespace Chat.Hubs
         public async Task SendDirectMessage(string recipient, string myName, string message)
         {
             Console.WriteLine("Direct");
+            System.Console.WriteLine(recipient);
+            System.Console.WriteLine(myName);
+            System.Console.WriteLine(message);
             await Clients.Group(recipient).SendAsync("ReceiveDirectMessage", recipient, myName, message);
         }
     }
